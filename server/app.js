@@ -9,14 +9,13 @@
 
 const express = require('express'); // Express web server framework
 const request = require('request'); // "Request" library
-const cors = require('cors');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 const secret = require('./config/secret.js');
 
 const client_id = secret.client_id; // Your client id
 const client_secret = secret.client_secret; // Your secret
-const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+const redirect_uri = 'http://localhost:8888/callback'; // Or Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -38,7 +37,6 @@ const stateKey = 'spotify_auth_state';
 const app = express();
 
 app.use(express.static(__dirname + '/public'))
-    .use(cors())
     .use(cookieParser());
 
 app.get('/login', function (req, res) {
@@ -47,7 +45,7 @@ app.get('/login', function (req, res) {
     res.cookie(stateKey, state);
 
     // your application requests authorization
-    let scope = 'user-read-private user-read-email';
+    let scope = 'user-read-private user-read-email user-read-playback-state playlist-modify-public playlist-read-private';
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
@@ -92,6 +90,11 @@ app.get('/callback', function (req, res) {
 
                 let access_token = body.access_token,
                     refresh_token = body.refresh_token;
+                // for (let key in response) {
+                //     if (response.hasOwnProperty(key)) {
+                //         console.log(key + " -> " + response[key]);
+                //     }
+                // }
 
                 let options = {
                     url: 'https://api.spotify.com/v1/me',
@@ -100,24 +103,36 @@ app.get('/callback', function (req, res) {
                     },
                     json: true
                 };
-
+                var id = '';
                 // use the access token to access the Spotify Web API
                 request.get(options, function (error, response, body) {
                     console.log(body);
-                });
+                    id = body.id;
+                    console.log('BODE: \n' + body.id + '  -.');
 
+                    res.redirect('http://localhost:3000/t/' +
+                        querystring.stringify({
+                            access_token: access_token,
+                            refresh_token: refresh_token,
+                            id: id
+                        }));
+
+                });
+                console.log(id + ' pls? ')
                 // we can also pass the token to the browser to make requests from there
-                res.redirect('http://localhost:3000/#' +
-                    querystring.stringify({
-                        access_token: access_token,
-                        refresh_token: refresh_token
-                    }));
+                // res.redirect('http://localhost:3000/#' +
+                //     querystring.stringify({
+                //         access_token: access_token,
+                //         refresh_token: refresh_token,
+                //         id: id
+                //     }));
             } else {
                 res.redirect('/#' +
                     querystring.stringify({
                         error: 'invalid_token'
                     }));
             }
+            console.log('done ' + id);
         });
     }
 });
