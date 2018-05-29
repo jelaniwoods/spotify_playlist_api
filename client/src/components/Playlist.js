@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../css/Playlist.css';
 let spotify_api;
 
 class Playlist extends Component {
@@ -7,10 +8,12 @@ class Playlist extends Component {
     this.state = {
       id: this.props.user,
       playlist: this.props.id,
+      image: this.props.cover,
       tracks: [],
       spotify: this.props.Spotify
     }
     spotify_api = this.props.Spotify;
+    console.log(this.state.image);
     // for (let key in props) {
     //   if (props.hasOwnProperty(key)) {
     //     console.log(key + " -> " + props[key]);
@@ -37,6 +40,7 @@ class Playlist extends Component {
   render() {
     return (
       <div className="Playlist" onClick={() => this.getTracks()}>
+        <img src={this.state.image} />
         {this.state.tracks.map(function(name, index) {
           return <li key={ index }> {name} </li>
         })}

@@ -1,0 +1,7 @@
+ul, li {
+    padding: .3em;
+    margin: .3em;
+}
+li {
+    list-style-type: none;
+}

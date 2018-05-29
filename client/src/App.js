@@ -102,8 +102,7 @@ class App extends Component {
       { this.state.loggedIn &&
         <div>
           {this.state.playlists.ids.map(function(id, index) {
-            return <li key={ index }> <Playlist id={id} user="sunshoes" Spotify={spotify_api}/> </li>
-            // return <Playlist key={ index } id={id} user="sunshoes" spotify={spotify_api} /> 
+            return <ul key={ index }> <Playlist id={id} user="sunshoes" Spotify={spotify_api} cover={index}/> </ul>
           })}
         </div>
       }
