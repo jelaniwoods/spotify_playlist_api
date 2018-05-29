@@ -110,7 +110,7 @@ app.get('/callback', function (req, res) {
                     id = body.id;
                     console.log('BODE: \n' + body.id + '  -.');
 
-                    res.redirect('http://localhost:3000/t/' +
+                    res.redirect('http://localhost:3000/#' +
                         querystring.stringify({
                             access_token: access_token,
                             refresh_token: refresh_token,
