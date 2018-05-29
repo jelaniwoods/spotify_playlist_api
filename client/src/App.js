@@ -34,7 +34,6 @@ class App extends Component {
     let hashParams = {};
     let e, r = /([^&;=]+)=?([^&;]*)/g,
       q = window.location.hash.substring(1);
-    console.log("heeeeyyy " + q);
     while (e = r.exec(q)) {
       hashParams[e[1]] = decodeURIComponent(e[2]);
     }
@@ -66,28 +65,7 @@ class App extends Component {
         console.log(this.state.playlists.ids + ' 00000');
       });
   }
-  getTracks() {
-    console.log(this.state.id + ' : ' + this.state.playlists.ids[0]);
-    spotify_api.getPlaylistTracks(this.state.id, this.state.playlists.ids[0])
-      .then((response) => {
-        let temp = [];
-        console.log(response);
-        for (let i = 0; i < response.items.length; i++) {
-          const el = response.items[i];
-          temp.push(el.track.name + ': ' + el.track.artists[0].name);
-          console.log(el.track.name + ': ' + el.track.artists[0].name);
-        }
-        this.setState({
-          playlists: {
-            names: [...this.state.playlists.names],
-            images: [...this.state.playlists.images],
-            ids: [...this.state.playlists.ids],
-            tracks: [{ ...temp}]
-          }
-        })
-        console.log(this.state.playlists.tracks)
-      })
-  }
+  
   render() {
     return (
       <div className="App">
@@ -101,9 +79,10 @@ class App extends Component {
       </button>
       { this.state.loggedIn &&
         <div>
-          {this.state.playlists.ids.map(function(id, index) {
-            return <ul key={ index }> <Playlist id={id} user="sunshoes" Spotify={spotify_api} cover={index}/> </ul>
+          {this.state.playlists.ids.map((id, index) => {
+            return <ul key={ index }> <Playlist id={id} user="sunshoes" Spotify={spotify_api} cover={this.state.playlists.images[index]}/> </ul>
           })}
+          
         </div>
       }
       </div>
