@@ -29,7 +29,7 @@ class Playlist extends Component {
           console.log(el.track.name + ': ' + el.track.artists[0].name);
         }
         this.setState({
-          tracks: [{ ...temp}],
+          tracks: [ ...temp],
           spotify: this.state.spotify
         })
       })
@@ -37,8 +37,9 @@ class Playlist extends Component {
   render() {
     return (
       <div className="Playlist" onClick={() => this.getTracks()}>
-        {this.props.user}
-        {this.props.id}
+        {this.state.tracks.map(function(name, index) {
+          return <li key={ index }> {name} </li>
+        })}
       </div>
     );
   }
