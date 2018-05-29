@@ -1,5 +1,6 @@
 #Client Side of spotify playlist api 
-
+goal is to create an easy way for users to pick one of their playlists and get all the api info from it
+eventually take that info and process it with youtube to create a youtube playlist with the same songs
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>

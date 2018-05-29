@@ -20,7 +20,7 @@ class App extends Component {
     }
     if (params.access_token) {
       spotify_api.setAccessToken(params.access_token);
-      console.log('LOGGED ');
+      console.log('LOGGED ' + this.state.loggedIn);
       for (let key in params) {
         if (params.hasOwnProperty(key)) {
           console.log(key + " -> " + params[key]);
@@ -28,11 +28,6 @@ class App extends Component {
       }
     } else {
       console.log('not this');
-      for (let key in params) {
-        if (params.hasOwnProperty(key)) {
-          console.log(key + " -> " + params[key]);
-        }
-      }
     }
   }
   getHashParams() {
@@ -67,9 +62,8 @@ class App extends Component {
             images: [...this.state.playlists.images, ...itemp],
             ids: [...this.state.playlists.ids, ...idtemp]
           }
-        })
+        });
         console.log(this.state.playlists.ids + ' 00000');
-        this.getTracks();
       });
   }
   getTracks() {
@@ -98,12 +92,18 @@ class App extends Component {
     return (
       <div className="App">
         <a href='http://localhost:8888'> Login to Spotify </a>
+        <br/>
       {this.state.loggedIn}
       Hey! {this.state.id}
+      <br/>
+      <button onClick={() => this.getPlaylists()}>
+        getPlaylists
+      </button>
       { this.state.loggedIn &&
         <div>
           {this.state.playlists.ids.map(function(id, index) {
-            return <Playlist key={ index } id={id} user={this.state.id} spotify={spotify_api} /> 
+            return <li key={ index }> <Playlist id={id} user="sunshoes" Spotify={spotify_api}/> </li>
+            // return <Playlist key={ index } id={id} user="sunshoes" spotify={spotify_api} /> 
           })}
         </div>
       }
