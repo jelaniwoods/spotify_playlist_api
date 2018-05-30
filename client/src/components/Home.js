@@ -70,9 +70,11 @@ class Home extends Component {
       <div className="Home">
         <a href='http://localhost:8888'> Login to Spotify </a>
         <br/>
-      {this.state.loggedIn}
-      Hey! {this.state.id}
-      <br/>
+      {this.state.loggedIn &&
+      <p>
+          Hey! {this.state.id}
+          <br/>
+      </p>}
       <button onClick={() => this.getPlaylists()}>
         getPlaylists
       </button>

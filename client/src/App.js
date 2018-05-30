@@ -77,13 +77,7 @@ class App extends Component {
           <Router>
         <Route render={({location}) => ( 
           <div >
-            <Route 
-              exact={true}
-              path={'/'}
-              render={() => (
-                <Redirect to='/' />
-              )}
-            /> 
+             
             <Switch
               location={location}
             >
@@ -94,7 +88,7 @@ class App extends Component {
               />
               <Route 
                  exact={true}
-                 path={'/home'}
+                 path={'/'}
                  component={Home}
                />
               <Route 

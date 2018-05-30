@@ -15,11 +15,6 @@ class Playlist extends Component {
     }
     spotify_api = this.props.Spotify;
     console.log(this.state.image);
-    // for (let key in props) {
-    //   if (props.hasOwnProperty(key)) {
-    //     console.log(key + " -> " + props[key]);
-    //   }
-    // }
   }
   getTracks() {
     console.log(this.state.id + ' : ' );
