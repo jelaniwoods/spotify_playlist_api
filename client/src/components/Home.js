@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
+import '../App.css';
 import Spotify from 'spotify-web-api-js';
-import Playlist from './components/Playlist';
-import Api from './components/Api';
-import Home from './components/Home';
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
-import './App.css';
+import Playlist from './Playlist';
+
 const spotify_api = new Spotify();
 
-class App extends Component {
+class Home extends Component {
   constructor() {
     super()
     const params = this.getHashParams();
@@ -74,43 +67,33 @@ class App extends Component {
   
   render() {
     return (
-          <Router>
-        <Route render={({location}) => ( 
-          <div >
-            <Route 
-              exact={true}
-              path={'/'}
-              render={() => (
-                <Redirect to='/' />
-              )}
-            /> 
-            <Switch
-              location={location}
-            >
-              <Route
-                exact={true}
-                path={'/p/:id'}
-                component={Api}
-              />
-              <Route 
-                 exact={true}
-                 path={'/home'}
-                 component={Home}
-               />
-              <Route 
-                 exact={true}
-                 path={'/:hash'}
-                 component={Home}
-               />
-              <Route
-                render={() => <div> Not Found </div>}
-              />
-            </Switch>
-            </div>
-            )} />
-          </Router>
+      <div className="Home">
+        <a href='http://localhost:8888'> Login to Spotify </a>
+        <br/>
+      {this.state.loggedIn}
+      Hey! {this.state.id}
+      <br/>
+      <button onClick={() => this.getPlaylists()}>
+        getPlaylists
+      </button>
+      { this.state.loggedIn &&
+        <div>
+          {this.state.playlists.ids.map((id, index) => {
+            return 
+              <ul key={ index }>
+                <Playlist
+                  id={id}
+                  user="sunshoes"
+                  Spotify={spotify_api}
+                  cover={this.state.playlists.images[index]}
+                />
+              </ul>
+          })}
+        </div>
+      }
+      </div>
     );
   }
 }
 
-export default App;
+export default Home;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../css/Playlist.css';
+import NavLink from './NavLink'
 let spotify_api;
 
 class Playlist extends Component {
@@ -40,6 +41,7 @@ class Playlist extends Component {
   render() {
     return (
       <div className="Playlist" onClick={() => this.getTracks()}>
+        <NavLink to={'/p/' + this.state.id}>tracks</NavLink>
         <img src={this.state.image} />
         {this.state.tracks.map(function(name, index) {
           return <li key={ index }> {name} </li>
