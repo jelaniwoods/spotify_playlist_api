@@ -20,11 +20,11 @@ class Playlist extends Component {
     this.getTracks();
   }
   getTracks() {
-    console.log(this.state.id + ' : ' );
+    // console.log(this.state.id + ' : ' );
     this.state.spotify.getPlaylistTracks(this.state.id, this.state.playlist)
       .then((response) => {
         let temp = [];
-        console.log(response);
+        // console.log(response);
         for (let i = 0; i < response.items.length; i++) {
           const el = response.items[i];
           temp.push(el.track.name + ': ' + el.track.artists[0].name);
@@ -39,15 +39,11 @@ class Playlist extends Component {
   render() {
     return (
       <div className="Playlist" >
-        {/* {this.state.id &&
-        <div> owo <Api id={this.state.id} playlist={this.state.playlist} spotify={spotify_api} /> </div>
-        } */}
         <NavLink to={this.state.token +'/' + this.state.id + '/p/' + this.state.playlist} > api </NavLink>
         <img src={this.state.image} alt={this.state.playlist}/>
-        {this.state.tracks.map(function(name, index) {
+        {/* {this.state.tracks.map(function(name, index) {
           return <li key={ index }> {name} </li>
-        })}
-        {/* <Api tracks={this.state.playlist.tracks} /> */}
+        })} */}
       </div>
     );
   }
