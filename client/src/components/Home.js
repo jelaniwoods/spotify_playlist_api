@@ -15,6 +15,7 @@ class Home extends Component {
     const params = this.getHashParams();
     this.state = {
       loggedIn: params.access_token ? true : false,
+      token: params.access_token,
       id: params.id,
       playlists: {
         names: [],
@@ -101,6 +102,7 @@ class Home extends Component {
                   id={id}
                   user="sunshoes"
                   Spotify={spotify_api}
+                  token={this.state.token}
                   cover={this.state.playlists.images[index]}
                 />
               </ul>

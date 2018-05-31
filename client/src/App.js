@@ -83,7 +83,7 @@ class App extends Component {
             >
               <Route
                 exact={true}
-                path={'/p/:id'}
+                path={'/:token/:user/p/:id'}
                 component={Api}
               />
               <Route 
@@ -91,11 +91,6 @@ class App extends Component {
                  path={'/'}
                  component={Home}
                />
-              {/* <Route 
-                 exact={true}
-                 path={'/:hash'}
-                 component={Home}
-               /> */}
               <Route
                 render={() => <div> Not Found </div>}
               />
