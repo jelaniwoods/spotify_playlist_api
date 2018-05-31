@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import '../css/Playlist.css';
+import NavLink from './NavLink'
+import Api from './Api'
 let spotify_api;
 
 class Playlist extends Component {
@@ -14,11 +16,6 @@ class Playlist extends Component {
     }
     spotify_api = this.props.Spotify;
     console.log(this.state.image);
-    // for (let key in props) {
-    //   if (props.hasOwnProperty(key)) {
-    //     console.log(key + " -> " + props[key]);
-    //   }
-    // }
   }
   getTracks() {
     console.log(this.state.id + ' : ' );
@@ -40,10 +37,15 @@ class Playlist extends Component {
   render() {
     return (
       <div className="Playlist" onClick={() => this.getTracks()}>
-        <img src={this.state.image} />
+        {this.state.playlist.tracks && 
+          <div> owo <Api tracks={this.state.playlist.tracks} /> </div>
+        }
+        <NavLink to={'/p/' + this.state.playlist} > {this.state.playlist} </NavLink>
+        <img src={this.state.image} alt={this.state.playlist}/>
         {this.state.tracks.map(function(name, index) {
           return <li key={ index }> {name} </li>
         })}
+        {/* <Api tracks={this.state.playlist.tracks} /> */}
       </div>
     );
   }

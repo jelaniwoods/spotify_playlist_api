@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
+import '../App.css';
 import Spotify from 'spotify-web-api-js';
-import Playlist from './components/Playlist';
-import Api from './components/Api';
-import Home from './components/Home';
-import {
-  BrowserRouter as Router,
-  Route,
-  Redirect,
-  Switch,
-} from 'react-router-dom';
-import './App.css';
-const spotify_api = new Spotify();
+import Playlist from './Playlist';
 
-class App extends Component {
+const spotify_api = new Spotify();
+const numbers = [1, 2, 3, 4, 5];
+let lists;
+const listItems = numbers.map((numbers) =>
+    <li>{numbers}</li>
+    );
+class Home extends Component {
   constructor() {
     super()
     const params = this.getHashParams();
@@ -26,6 +23,7 @@ class App extends Component {
         tracks: []
       }
     }
+
     if (params.access_token) {
       spotify_api.setAccessToken(params.access_token);
       console.log('LOGGED ' + this.state.loggedIn);
@@ -47,7 +45,13 @@ class App extends Component {
     }
     return hashParams;
   }
+  updatePlaylist() {
+      lists = this.state.playlists.ids.map((ids) =>
+      <li>{ids}</li>);
+      console.log('gottem ' + lists);
+    }
   getPlaylists() {
+        console.log('xddd ' );
     spotify_api.getUserPlaylists()
       .then((response) => {
         let temp = [];
@@ -63,48 +67,50 @@ class App extends Component {
         }
         this.setState({
           playlists: {
-            names: [...this.state.playlists.names, ...temp],
-            images: [...this.state.playlists.images, ...itemp],
-            ids: [...this.state.playlists.ids, ...idtemp]
+            names: [...temp],
+            images: [...itemp],
+            ids: [...idtemp]
           }
         });
         console.log(this.state.playlists.ids + ' 00000');
+        this.updatePlaylist();
       });
   }
-  
+
   render() {
     return (
-          <Router>
-        <Route render={({location}) => ( 
-          <div >
-             
-            <Switch
-              location={location}
-            >
-              <Route
-                exact={true}
-                path={'/p/:id'}
-                component={Api}
-              />
-              <Route 
-                 exact={true}
-                 path={'/'}
-                 component={Home}
-               />
-              {/* <Route 
-                 exact={true}
-                 path={'/:hash'}
-                 component={Home}
-               /> */}
-              <Route
-                render={() => <div> Not Found </div>}
-              />
-            </Switch>
-            </div>
-            )} />
-          </Router>
+      <div className="Home">
+        <a href='http://localhost:8888'> Login to Spotify </a>
+        <br/>
+      {this.state.loggedIn &&
+      <p>
+          Hey! {this.state.id}
+          <br/>
+      </p>}
+      <button onClick={() => this.getPlaylists()}>
+        getPlaylists
+      </button>
+      { this.state.loggedIn &&
+        <div>
+            uwu
+          {this.state.playlists.ids.map((id, index) => {
+            return (
+              <ul key={ index }>
+                {id}
+                 <Playlist
+                  id={id}
+                  user="sunshoes"
+                  Spotify={spotify_api}
+                  cover={this.state.playlists.images[index]}
+                />
+              </ul>
+            )
+          })} 
+        </div>
+      }
+      </div>
     );
   }
 }
 
-export default App;
+export default Home;
