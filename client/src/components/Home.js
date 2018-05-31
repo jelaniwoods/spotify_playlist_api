@@ -16,11 +16,10 @@ class Home extends Component {
     this.state = {
       loggedIn: params.access_token ? true : false,
       id: params.id,
-      ids: [],
       playlists: {
         names: [],
-        images: ['64eRY0nNFf862gRjEqwDtq'],
-        ids: ['64eRY0nNFf862gRjEqwDtq'],
+        images: [],
+        ids: [],
         tracks: []
       }
     }
@@ -47,11 +46,12 @@ class Home extends Component {
     return hashParams;
   }
   updatePlaylist() {
-    lists = this.state.playlists.ids.map((ids) =>
-        <li>{ids}</li>);
-    console.log('gottem ' + lists);
-  }
+      lists = this.state.playlists.ids.map((ids) =>
+      <li>{ids}</li>);
+      console.log('gottem ' + lists);
+    }
   getPlaylists() {
+        console.log('xddd ' );
     spotify_api.getUserPlaylists()
       .then((response) => {
         let temp = [];
@@ -66,7 +66,6 @@ class Home extends Component {
             itemp.push('none');
         }
         this.setState({
-            ids: [...idtemp],
           playlists: {
             names: [...temp],
             images: [...itemp],
@@ -94,10 +93,8 @@ class Home extends Component {
       { this.state.loggedIn &&
         <div>
             uwu
-            <ul>{lists}</ul>
-            
-          {/* {this.state.playlists.ids.map((id, index) => {
-            return 
+          {this.state.playlists.ids.map((id, index) => {
+            return (
               <ul key={ index }>
                 {id}
                  <Playlist
@@ -107,7 +104,8 @@ class Home extends Component {
                   cover={this.state.playlists.images[index]}
                 />
               </ul>
-          })}  */}
+            )
+          })} 
         </div>
       }
       </div>
