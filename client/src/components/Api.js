@@ -45,10 +45,11 @@ class Api extends Component {
   render() {
     return (
       <div className="API">
-        {'{'}
+        {'{\n'}
+        "tracks":
         <ul onClick={this.getTracks()}>
             {this.state.tracks.map(function(o, index) {
-            return <li key={ index }> {'{'} name : {o.name}, artist: {o.artist} {'}'},</li>
+            return <li key={ index }> {'{'} "name" : "{o.name}", "artist": "{o.artist}" {'}'},</li>
             })}
         </ul>
         {'}'}
