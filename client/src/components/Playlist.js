@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../css/Playlist.css';
 import NavLink from './NavLink'
+import Api from './Api'
 let spotify_api;
 
 class Playlist extends Component {
@@ -36,11 +37,15 @@ class Playlist extends Component {
   render() {
     return (
       <div className="Playlist" onClick={() => this.getTracks()}>
-        <NavLink to={'/p/' + this.state.id}>tracks</NavLink>
-        <img src={this.state.image} alt={this.state.id}/>
+        {this.state.playlist.tracks && 
+          <div> owo <Api tracks={this.state.playlist.tracks} /> </div>
+        }
+        <NavLink to={'/p/' + this.state.playlist} > {this.state.playlist} </NavLink>
+        <img src={this.state.image} alt={this.state.playlist}/>
         {this.state.tracks.map(function(name, index) {
           return <li key={ index }> {name} </li>
         })}
+        {/* <Api tracks={this.state.playlist.tracks} /> */}
       </div>
     );
   }

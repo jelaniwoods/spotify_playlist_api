@@ -9,6 +9,7 @@ let spotify_api;
 
 class Api extends Component {
   constructor(props) {
+      console.log(props);
     super(props);
     this.state = {
       tracks: [...this.props.tracks]
@@ -20,7 +21,7 @@ class Api extends Component {
       <div className="Api">
         <ul>
             {this.state.tracks.map(function(name, index) {
-            return <li key={ index }> {name} </li>
+            return <li key={ index }>x {name} </li>
             })}
         </ul>
       </div>
