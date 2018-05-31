@@ -91,11 +91,11 @@ class App extends Component {
                  path={'/'}
                  component={Home}
                />
-              <Route 
+              {/* <Route 
                  exact={true}
                  path={'/:hash'}
                  component={Home}
-               />
+               /> */}
               <Route
                 render={() => <div> Not Found </div>}
               />

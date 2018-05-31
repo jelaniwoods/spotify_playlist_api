@@ -4,7 +4,11 @@ import Spotify from 'spotify-web-api-js';
 import Playlist from './Playlist';
 
 const spotify_api = new Spotify();
-
+const numbers = [1, 2, 3, 4, 5];
+let lists;
+const listItems = numbers.map((numbers) =>
+    <li>{numbers}</li>
+    );
 class Home extends Component {
   constructor() {
     super()
@@ -12,13 +16,15 @@ class Home extends Component {
     this.state = {
       loggedIn: params.access_token ? true : false,
       id: params.id,
+      ids: [],
       playlists: {
         names: [],
-        images: [],
-        ids: [],
+        images: ['64eRY0nNFf862gRjEqwDtq'],
+        ids: ['64eRY0nNFf862gRjEqwDtq'],
         tracks: []
       }
     }
+
     if (params.access_token) {
       spotify_api.setAccessToken(params.access_token);
       console.log('LOGGED ' + this.state.loggedIn);
@@ -40,6 +46,11 @@ class Home extends Component {
     }
     return hashParams;
   }
+  updatePlaylist() {
+    lists = this.state.playlists.ids.map((ids) =>
+        <li>{ids}</li>);
+    console.log('gottem ' + lists);
+  }
   getPlaylists() {
     spotify_api.getUserPlaylists()
       .then((response) => {
@@ -55,16 +66,18 @@ class Home extends Component {
             itemp.push('none');
         }
         this.setState({
+            ids: [...idtemp],
           playlists: {
-            names: [...this.state.playlists.names, ...temp],
-            images: [...this.state.playlists.images, ...itemp],
-            ids: [...this.state.playlists.ids, ...idtemp]
+            names: [...temp],
+            images: [...itemp],
+            ids: [...idtemp]
           }
         });
         console.log(this.state.playlists.ids + ' 00000');
+        this.updatePlaylist();
       });
   }
-  
+
   render() {
     return (
       <div className="Home">
@@ -80,17 +93,21 @@ class Home extends Component {
       </button>
       { this.state.loggedIn &&
         <div>
-          {this.state.playlists.ids.map((id, index) => {
+            uwu
+            <ul>{lists}</ul>
+            
+          {/* {this.state.playlists.ids.map((id, index) => {
             return 
               <ul key={ index }>
-                <Playlist
+                {id}
+                 <Playlist
                   id={id}
                   user="sunshoes"
                   Spotify={spotify_api}
                   cover={this.state.playlists.images[index]}
                 />
               </ul>
-          })}
+          })}  */}
         </div>
       }
       </div>

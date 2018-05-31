@@ -37,7 +37,7 @@ class Playlist extends Component {
     return (
       <div className="Playlist" onClick={() => this.getTracks()}>
         <NavLink to={'/p/' + this.state.id}>tracks</NavLink>
-        <img src={this.state.image} />
+        <img src={this.state.image} alt={this.state.id}/>
         {this.state.tracks.map(function(name, index) {
           return <li key={ index }> {name} </li>
         })}
